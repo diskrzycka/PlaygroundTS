@@ -1,5 +1,5 @@
-import JSONDatabase from "./db";
-import IndexedJSONDatabase from "./indexed-db";
+import JSONDatabase from "./JSONDatabase";
+import IndexedJSONDatabase from "./IndexedJSONDatabase";
 
 interface User {
   id: number;

@@ -1,0 +1,75 @@
+###
+GET http://localhost:3000/users
+
+###
+GET http://localhost:3000/users/1
+
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "Piotr Nowy",
+  "email": "piotr@example.com"
+}
+
+###
+PUT http://localhost:3000/users/3
+Content-Type: application/json
+
+{
+  "email": "piotr.nowy@newmail.com"
+}
+
+###
+DELETE http://localhost:3000/users/1
+
+### Validation tests - missing email
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "id": 100,
+  "name": "Piotr Nowy"
+}
+
+### Validation tests - email is not an email
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "id": 100,
+  "name": "Piotr Nowy",
+  "email": "piotr@com"
+}
+
+### Validation tests - wrong id
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "id": "100",
+  "name": "Piotr Nowy",
+  "email": "piotr@example.com"
+}
+
+### Validation tests - name too short
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "id": 100,
+  "name": "Pt",
+  "email": "piotr@example.com"
+}
+
+### Validation tests - name too long
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "id": 100,
+  "name": "PiotrPiotrPiotrPiotrPiotrPiotrPiotrPiotrPiotrPiotr1",
+  "email": "piotr@example.com"
+}
