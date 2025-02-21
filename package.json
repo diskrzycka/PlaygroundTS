@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/json-db/server.ts",
+    "start-db-server": "nodemon src/json-db/server.ts",
     "test": "jest"
   },
   "keywords": [],

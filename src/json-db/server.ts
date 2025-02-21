@@ -2,17 +2,18 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import IndexedJSONDatabase from "./IndexedJSONDatabase";
-import { validateUser } from "./validators";
+import { validateUser, validateUserUpdate } from "./validators";
+import { v4 as uuidv4 } from "uuid";
 
 interface User {
-    id: number;
+    id: string;
     name: string;
     email: string;
 }
 
 const app = express();
 const port = 3000;
-const userDB = new IndexedJSONDatabase<User>("users", "id");
+const userDB = new IndexedJSONDatabase<User>("users-server", "id");
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -37,17 +38,18 @@ app.post("/users", async (req, res) => {
     if (!result.success) {
         res.status(400).json({ errors: result.error.format() });
     }
-
-    await userDB.create(result.data!);
+    const user = {... result.data!, id: uuidv4()} as User;
+    await userDB.create(user);
     res.status(201).json(result.data);
 });
 
 app.put("/users/:id", async (req, res) => {
-    const userId = Number(req.params.id);
-    const result = validateUser({ id: userId, ...req.body });
+    const userId = req.params.id;
+    const result = validateUserUpdate({ id: userId, ...req.body });
 
     if (!result.success) {
         res.status(400).json({ errors: result.error.format() });
+        return;
     }
 
     await userDB.update(userId, result.data!);
