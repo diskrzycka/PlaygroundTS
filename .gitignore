@@ -28,6 +28,9 @@ jspm_packages/
 dist/
 build/
 out/
+src/**/*.js
+tests/**/*.test.js
+src/**/*.json
 
 # IDEs and editors
 .vscode/
