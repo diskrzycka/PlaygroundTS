@@ -34,13 +34,13 @@ app.get("/users/:id", async (req, res) => {
 
 app.post("/users", async (req, res) => {
     const result = validateUser(req.body);
-
     if (!result.success) {
         res.status(400).json({ errors: result.error.format() });
+        return;
     }
     const user = {... result.data!, id: uuidv4()} as User;
     await userDB.create(user);
-    res.status(201).json(result.data);
+    res.status(201).json(user);
 });
 
 app.put("/users/:id", async (req, res) => {
@@ -65,3 +65,4 @@ app.delete("/users/:id", async (req, res) => {
 app.listen(port, () => {
     console.log(`🚀 Server running on http://localhost:${port}`);
 });
+export default app;
